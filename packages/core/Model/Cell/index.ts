@@ -1,3 +1,12 @@
-class Cell {
-    
+export class Cell {
+
+
+
+
+
+
+
+
+
+
 }

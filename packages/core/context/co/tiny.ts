@@ -1,4 +1,4 @@
-abstract class Tiny {
+export abstract class Tiny {
     bind(){
 
     }
