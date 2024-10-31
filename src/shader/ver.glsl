@@ -1,5 +1,7 @@
 attribute vec4 aVertexPosition;
-
-void main(void) {
-    gl_Position = aVertexPosition;
+uniform mat4 uModelViewMatrix;
+uniform mat4 uModelViewMatrix;
+uniform mat4 uProjectionMatrix;
+void main() {
+    gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
 }

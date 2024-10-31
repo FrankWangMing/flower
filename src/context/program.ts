@@ -48,24 +48,53 @@ export class Program extends Tiny {
     create(gl:WebGLRenderingContext) {
         this.id = gl.createProgram() as WebGLProgram
     }
-
+    initAttribute(gl){
+        const length = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
+        console.log("initAttribute",length)
+        for (let index = 0; index < length; index++) {
+            const activeAttribInfo = gl.getActiveAttrib(this.id, index);
+            const name = activeAttribInfo.name;
+            console.log("name",name)
+            const location = gl.getAttribLocation(this.id, name);
+            console.log("location",location)
+            this.m_attributeLocations[name] = {
+                location: location,
+            };
+        }
+    }
+    initUniform(gl){
+        const length = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
+        console.log("initUniform",length)
+        for (let index = 0; index < length; index++) {
+            const activeAttribInfo = gl.getActiveUniform(this.id, index);
+            const name = activeAttribInfo.name;
+            console.log("name",name)
+            const location = gl.getUniformLocation(this.id, name);
+            console.log("location",location)
+            this.m_uniformLocations[name] = {
+                location: location,
+                type:activeAttribInfo.type,
+            };
+        }
+    }
     tie(gl:WebGLRenderingContext) {
         this.create(gl)
         this.attach()
         this.link()
         this.use()
-        const length = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
-
-        for (let index = 0; index < length; index++) {
-          const activeInfo = gl.getActiveAttrib(this.id, index);
-          const name = activeInfo.name;
-          console.log("name",name)
-          const location = gl.getAttribLocation(this.id, name);
-          console.log("location",location)
-          this.m_attributeLocations[name] = {
-            location: location,
-          };
+        // 检查程序链接
+        if (!gl.getProgramParameter(this.id, gl.LINK_STATUS)) {
+            console.error('Program link error:', this.gl.getProgramInfoLog(this.id));
         }
+
+        this.initAttribute(gl)
+        this.initUniform(gl)
+
+
+
+
+
+
     }
 
     attach(){
@@ -75,6 +104,7 @@ export class Program extends Tiny {
 
     link(){
         this.gl.linkProgram(this.id);
+
     }
 
     use(){

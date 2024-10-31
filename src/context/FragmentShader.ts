@@ -17,6 +17,9 @@ export class BasicShader extends Tiny{
         this.create(gl)
         this.shaderSource(gl,this.source)
         this.compile(gl)
+        if (!gl.getShaderParameter(this.shader, gl.COMPILE_STATUS)) {
+            console.error('Shader compilation error:', gl.getShaderInfoLog(this.shader));
+        }
     }
     create(gl: WebGLRenderingContext): void {
         this.shader =  gl.createShader({

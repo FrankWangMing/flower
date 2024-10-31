@@ -1,5 +1,6 @@
 import { IAttributeInfo, Program } from "../../context/program";
 import {Tiny} from "../../context/co/tiny";
+import {IndexBufferObject} from "./indexBufferObject.ts";
 
 export type VertexType ="aVertexPosition" | "aIndex"
 export class VertexBufferObject  extends Tiny {
@@ -22,26 +23,12 @@ export class VertexBufferObject  extends Tiny {
     }
 
     bind(gl:WebGLRenderingContext){
-        switch (this.name){
-            case "aVertexPosition":
-                gl.bindBuffer(gl.ARRAY_BUFFER,this.id)
-                break;
-            case "aIndex":
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,this.id)
-                break;
-        }
-
-        if(this.name == 'aVertexPosition'){
-            const info = this.findAttributeInfo();
-            console.log(info)
-            const loc = info.location;
-            console.log(info)
-            gl.enableVertexAttribArray(loc);
-        }
+        gl.bindBuffer(gl.ARRAY_BUFFER,this.id)
+        const info = this.findAttributeInfo();
+        console.log(info)
+        const loc = info.location;
+        this.doLoad(gl,loc)
     }
-
-
-
 
     tie(gl: WebGLRenderingContext) {
         this.create(gl)
@@ -51,19 +38,7 @@ export class VertexBufferObject  extends Tiny {
 
 
     bufferData(gl:WebGLRenderingContext){
-        switch (this.name){
-            case "aVertexPosition":
-                gl.bufferData(gl.ARRAY_BUFFER,this.data,gl.STATIC_DRAW)
-                break;
-            case "aIndex":
-                gl.bufferData(
-                    gl.ELEMENT_ARRAY_BUFFER,
-                    this.data,
-                    gl.STATIC_DRAW
-                  );
-                break;
-        }
-
+        gl.bufferData(gl.ARRAY_BUFFER,this.data,gl.STATIC_DRAW)
     }
 
     doLoad(gl:WebGLRenderingContext,location:GLint){
@@ -83,7 +58,7 @@ export class VertexBufferObject  extends Tiny {
 }
 
 
-export class VertexBufferObjectSet extends Set<VertexBufferObject>{
+export class VertexBufferObjectSet extends Set<VertexBufferObject|IndexBufferObject>{
     constructor() {
         super();
     }

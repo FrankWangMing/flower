@@ -37,7 +37,9 @@ export class DrawElements extends BasicDraw {
         this.draw(gl)
     }
     draw(gl: WebGLRenderingContext) {
-        gl.drawElements(gl.TRIANGLES, 12, gl.UNSIGNED_SHORT, 0);
+        const vertexCount = 12;
+        gl.drawElements(gl.TRIANGLES, vertexCount, gl.UNSIGNED_SHORT, 0);
+
     }
 }
 

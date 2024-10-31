@@ -3,6 +3,7 @@ import {Cell} from "../model/cell";
 import {Program} from "../context/program";
 import {DepthState} from "../material/state";
 import {DrawArray} from "../context/draw";
+import {uModelViewMatrix, uProjectionMatrix} from "../context/channel.ts";
 
 export class RenderList extends Array<Cell>{
     constructor() {
@@ -34,12 +35,25 @@ export class RenderList extends Array<Cell>{
                     queue.push(vbo)
                 }
             )
+
+            queue.push(
+                new uProjectionMatrix(gl)
+            )
+
+            queue.push(
+                new uModelViewMatrix()
+            )
+
             i.geometry.drawers.forEach(
                 drawer=>{
                     queue.push(drawer)
                 }
             )
+
+
+
         })
+        console.log(queue)
         this.queue = queue
     }
 
@@ -52,9 +66,19 @@ export class RenderList extends Array<Cell>{
     render(gl:WebGLRenderingContext){
         this.destroyQueue(gl)
         this.createQueue(gl)
+
+        gl.clearColor(0.0, 0.0, 0.0, 0.5);
+        gl.clearDepth(1.0);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         this.queue.forEach(i=>{
             i.tie(gl)
         })
+        const error = gl.getError();
+        if (error !== gl.NO_ERROR) {
+            console.error('WebGL Error:', error);
+        }
 
         console.log(this.queue)
     }

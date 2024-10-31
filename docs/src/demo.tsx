@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useCallback, useEffect, useRef} from 'react'
 import {Scene} from "../../src";
 import {Cell} from "../../src/model/cell";
 import {Buffer, Geometry} from "../../src/model/geometry";
@@ -16,10 +16,16 @@ export  default  ()=>{
                 material:new Material()
             })
             scene.add(cell)
-
+            scene.build()
+            function render(){
+                scene.render()
+                requestAnimationFrame(render)
+            }
             scene.render()
-        }
 
+        }
     },[ref])
+
+
     return <div ref={ref}></div>
 }

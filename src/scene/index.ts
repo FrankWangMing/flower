@@ -40,6 +40,7 @@ export class Scene extends RenderList {
 
     /*执行渲染*/
     render(){
+        console.log("render")
         super.render(this.gl)
     }
 
