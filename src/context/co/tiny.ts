@@ -4,6 +4,7 @@ export abstract class Tiny {
     create(gl:WebGLRenderingContext) {
 
     }
+     //销毁
     destroy(gl:WebGLRenderingContext) {
 
     }
@@ -11,7 +12,7 @@ export abstract class Tiny {
     tie(gl:WebGLRenderingContext) {
 
     }
-
+    //解除绑定
     untie() {
     }
 }

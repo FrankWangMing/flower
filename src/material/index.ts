@@ -9,7 +9,11 @@ export class  Material {
     uniform:UniformSet = new UniformSet()
     state:StateSet = new StateSet()
     constructor() {
+        this.init()
 
+    }
+    init(){
+        // this.shader.add()
     }
 }
 

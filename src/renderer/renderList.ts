@@ -1,8 +1,8 @@
-import {Tiny} from "./co/tiny";
+import {Tiny} from "../context/co/tiny";
 import {Cell} from "../model/cell";
-import {Program} from "./program";
+import {Program} from "../context/program";
 import {DepthState} from "../material/state";
-import {DrawArray} from "./draw";
+import {DrawArray} from "../context/draw";
 
 export class RenderList extends Array<Cell>{
     constructor() {
@@ -20,7 +20,7 @@ export class RenderList extends Array<Cell>{
             DepthState.default()
         )
         this.forEach(i=>{
-            console.log(i)
+            console.log("i",i)
             queue.push(
                 new Program(gl,i.material.shader)
             )
@@ -35,20 +35,28 @@ export class RenderList extends Array<Cell>{
                     queue.push(vbo)
                 }
             )
-            queue.push(new DrawArray())
+            i.geometry.drawers.forEach(
+                drawer=>{
+                    queue.push(drawer)
+                }
+            )
         })
         this.queue = queue
     }
+
     destroyQueue(gl:WebGLRenderingContext){
 
     }
+
     queue:Tiny[]=[]
+
     render(gl:WebGLRenderingContext){
         this.destroyQueue(gl)
         this.createQueue(gl)
         this.queue.forEach(i=>{
             i.tie(gl)
         })
+
         console.log(this.queue)
     }
 

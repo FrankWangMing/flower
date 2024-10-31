@@ -1,5 +1,8 @@
 
 export class Camera {
+    constructor(){
+
+    }
 
 
 

@@ -1,4 +1,4 @@
-import {uniqueId} from "lodash-es";
+import {uniqueId} from "lodash";
 
 export  function createCanvasElement(div: HTMLDivElement) {
     const canvas = document.createElement('canvas');
