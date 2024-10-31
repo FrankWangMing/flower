@@ -1,4 +1,4 @@
-import {vec3,mat4} from 'gl-matrix'
+import {mat4, vec3} from "gl-matrix-esm";
 
 export class ViewMatrix {
 

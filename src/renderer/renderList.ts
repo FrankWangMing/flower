@@ -20,7 +20,6 @@ export class RenderList extends Array<Cell>{
             DepthState.default()
         )
         this.forEach(i=>{
-            console.log("i",i)
             queue.push(
                 new Program(gl,i.material.shader)
             )

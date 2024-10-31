@@ -1,0 +1,9 @@
+class Channel {
+    constructor() {
+    }
+
+
+}
+
+
+

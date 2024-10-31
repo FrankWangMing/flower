@@ -10,7 +10,6 @@ export class  Material {
     state:StateSet = new StateSet()
     constructor() {
         this.init()
-
     }
     init(){
         // this.shader.add()

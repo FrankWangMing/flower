@@ -31,7 +31,7 @@
   "author": "Frank",
   "license": "ISC",
   "dependencies": {
-    "dumi": "^2.4.7",
+    "dumi": "^2.4.13",
     "gl-matrix": "^3.4.3",
     "gl-matrix-esm": "^4.0.3",
     "lodash": "^4.17.21",
@@ -39,17 +39,17 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.7",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/lodash": "^4.17.13",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react-swc": "^3.7.0",
-    "eslint": "^8.57.0",
+    "@vitejs/plugin-react-swc": "^3.7.1",
+    "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.0"
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
   },
   "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
 }

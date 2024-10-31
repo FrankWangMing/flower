@@ -1,6 +1,6 @@
 import {Tiny} from "../../context/co/tiny";
 
-class Uniform  extends Tiny{
+class Uniform  extends Tiny {
     constructor() {
         super()
     }
