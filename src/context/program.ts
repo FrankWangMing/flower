@@ -50,7 +50,6 @@ export class Program extends Tiny {
     }
     initAttribute(gl){
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
-        console.log("initAttribute",length)
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveAttrib(this.id, index);
             const name = activeAttribInfo.name;
@@ -64,7 +63,6 @@ export class Program extends Tiny {
     }
     initUniform(gl){
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
-        console.log("initUniform",length)
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveUniform(this.id, index);
             const name = activeAttribInfo.name;
@@ -89,10 +87,6 @@ export class Program extends Tiny {
 
         this.initAttribute(gl)
         this.initUniform(gl)
-
-
-
-
 
 
     }

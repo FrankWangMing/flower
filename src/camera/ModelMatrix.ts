@@ -1,16 +1,22 @@
 import {mat4, vec3} from "gl-matrix-esm";
+import {IUniformInfo, Program} from "../context/program.ts";
+import {Uniform} from "../material/uniform";
 
-export class ViewMatrix {
+export class ModelMatrix extends Uniform {
 
     constructor() {
-        // Compute the camera's matrix
-        const camera = vec3.fromValues(100, 150, 200);
-        const target =  vec3.fromValues(0, 35, 0);
-        const up = vec3.fromValues(0, 1, 0);
-        const cameraMatrix = mat4.create()
-        mat4.lookAt(cameraMatrix,camera, target, up);
+        super()
+        const modelViewMatrix = this.matrix;
+        mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -5.0]);
+        this.matrix = modelViewMatrix
     }
+    name="uModelViewMatrix"
 
-
+    tie(gl:WebGLRenderingContext) {
+        // 设定模型视图矩阵
+        const Uniform = this.findUniformInfo()
+        this.location = Uniform.location
+        this.update()
+    }
 
 }

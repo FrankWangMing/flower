@@ -1,9 +1,11 @@
 import {Context} from "../context/context";
 import {Model} from "../model";
-import {Camera} from "../camera";
+
 import {RenderList} from "../renderer/renderList";
 import {Background} from "./background";
 import {Cell} from "../model/cell";
+import {Controller} from "../controller";
+import {Camera} from "../camera";
 
 export class Scene extends RenderList {
     context: Context | undefined
@@ -12,7 +14,8 @@ export class Scene extends RenderList {
     }
     background:Background = new Background()
     model:Model = new Model()
-    camera:Camera = new Camera()
+    camera:Camera = new Camera(this)
+    controller:Controller = new Controller()
     /*
     挂载 dom 节点
     * */
@@ -25,6 +28,7 @@ export class Scene extends RenderList {
     初始化函数
      */
     init(){
+        this.controller.init(this)
 
     }
     get gl():WebGLRenderingContext{

@@ -1,12 +1,14 @@
 import { IAttributeInfo, Program } from "../../context/program";
 import {Tiny} from "../../context/co/tiny";
 import {IndexBufferObject} from "./indexBufferObject.ts";
+import {Attribute} from "../../material/attribute";
 
 export type VertexType ="aVertexPosition" | "aIndex"
 export class VertexBufferObject  extends Tiny {
     name:VertexType = 'aVertexPosition'
     id:WebGLBuffer
     data:Float32Array|Uint32Array
+    attribute:Attribute
     constructor(name:VertexType,data:Float32Array|Uint32Array) {
         super()
         this.name = name
@@ -25,11 +27,10 @@ export class VertexBufferObject  extends Tiny {
     bind(gl:WebGLRenderingContext){
         gl.bindBuffer(gl.ARRAY_BUFFER,this.id)
         const info = this.findAttributeInfo();
-        console.log(info)
         const loc = info.location;
         this.doLoad(gl,loc)
     }
-
+    // 整理流程
     tie(gl: WebGLRenderingContext) {
         this.create(gl)
         this.bind(gl)
@@ -41,7 +42,7 @@ export class VertexBufferObject  extends Tiny {
         gl.bufferData(gl.ARRAY_BUFFER,this.data,gl.STATIC_DRAW)
     }
 
-    doLoad(gl:WebGLRenderingContext,location:GLint){
+    doLoad(gl:WebGLRenderingContext,location:GLint) {
         gl.enableVertexAttribArray(location);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.id);
         gl.vertexAttribPointer(

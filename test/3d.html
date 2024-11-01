@@ -171,7 +171,7 @@
         now *= 0.001; // 将时间转换为秒
         const deltaTime = now - then;
         then = now;
-
+        console.log(deltaTime)
         mat4.rotateY(modelViewMatrix, modelViewMatrix, deltaTime);
 
         gl.clearColor(0.0, 0.0, 0.0, 1.0);

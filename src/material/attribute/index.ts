@@ -2,7 +2,8 @@
 import {Tiny} from "../../context/co/tiny";
 import {Program} from "../../context/program.ts";
 
-class Attribute  extends Tiny {
+export class Attribute  extends Tiny {
+    name:string
     constructor() {
         super()
     }

@@ -2,8 +2,8 @@ import {Tiny} from "../context/co/tiny";
 import {Cell} from "../model/cell";
 import {Program} from "../context/program";
 import {DepthState} from "../material/state";
-import {DrawArray} from "../context/draw";
-import {uModelViewMatrix, uProjectionMatrix} from "../context/channel.ts";
+
+import {Camera} from "../camera";
 
 export class RenderList extends Array<Cell>{
     constructor() {
@@ -20,10 +20,14 @@ export class RenderList extends Array<Cell>{
         queue.push(
             DepthState.default()
         )
+
         this.forEach(i=>{
             queue.push(
                 new Program(gl,i.material.shader)
             )
+            this.camera.defaultUniform.forEach(i=>{
+                queue.push(i)
+            })
             i.material.state.forEach(i=>{
                 queue.push(i)
             })
@@ -35,23 +39,15 @@ export class RenderList extends Array<Cell>{
                     queue.push(vbo)
                 }
             )
-
-            queue.push(
-                new uProjectionMatrix(gl)
-            )
-
-            queue.push(
-                new uModelViewMatrix()
-            )
-
             i.geometry.drawers.forEach(
                 drawer=>{
                     queue.push(drawer)
                 }
             )
-
-
-
+        })
+        this.camera.defaultUniform.forEach(i=>{
+            console.log(i)
+            queue.push(i)
         })
         console.log(queue)
         this.queue = queue
@@ -80,7 +76,6 @@ export class RenderList extends Array<Cell>{
             console.error('WebGL Error:', error);
         }
 
-        console.log(this.queue)
     }
 
 }
