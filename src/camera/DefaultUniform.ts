@@ -2,13 +2,21 @@ import {Uniform, UniformSet} from "../material/uniform";
 import {ModelMatrix} from "./ModelMatrix.ts";
 import {ViewMatrix} from "./ViewMatrix.ts";
 import {ProjectMatrix} from "./ProjectMfatrix.ts";
+import {vec3, Vec3Like} from "gl-matrix-esm";
+import {ViewportSize} from "./ViewportSize.ts";
 
 export class DefaultUniform extends UniformSet{
-    modelMatrix:ModelMatrix=new ModelMatrix()
-    viewMatrix:ViewMatrix=new ViewMatrix()
-    projectMatrix:ViewMatrix=new ProjectMatrix()
+    modelMatrix:ModelMatrix
+    viewMatrix:ViewMatrix
+    projectMatrix:ProjectMatrix
+    orbitPoint:Vec3Like
+    viewportSize:ViewportSize
     constructor() {
         super();
+        this.projectMatrix = new ProjectMatrix()
+        this.viewMatrix = new ViewMatrix(this)
+        this.modelMatrix = new ModelMatrix()
+        this.orbitPoint = vec3.create()
         this.add(
             <Uniform>this.modelMatrix
         )
@@ -18,6 +26,7 @@ export class DefaultUniform extends UniformSet{
         this.add(
             <Uniform>this.projectMatrix
         )
+        ViewMatrix.current = this.viewMatrix;
     }
 
 }

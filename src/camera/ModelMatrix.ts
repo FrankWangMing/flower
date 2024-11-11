@@ -1,5 +1,4 @@
 import {mat4, vec3} from "gl-matrix-esm";
-import {IUniformInfo, Program} from "../context/program.ts";
 import {Uniform} from "../material/uniform";
 
 export class ModelMatrix extends Uniform {
@@ -7,10 +6,10 @@ export class ModelMatrix extends Uniform {
     constructor() {
         super()
         const modelViewMatrix = this.matrix;
-        mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -5.0]);
+        mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, 0.0]);
         this.matrix = modelViewMatrix
     }
-    name="uModelViewMatrix"
+    name="uModelMatrix"
 
     tie(gl:WebGLRenderingContext) {
         // 设定模型视图矩阵

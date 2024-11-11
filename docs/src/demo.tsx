@@ -19,9 +19,9 @@ export  default  ()=>{
             scene.build()
             function render(){
                 scene.render()
-                requestAnimationFrame(render)
+                // requestAnimationFrame(render)
             }
-            scene.render()
+            requestAnimationFrame(render)
 
         }
     },[ref])

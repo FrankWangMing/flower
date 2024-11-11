@@ -14,7 +14,7 @@ export class Scene extends RenderList {
     }
     background:Background = new Background()
     model:Model = new Model()
-    camera:Camera = new Camera(this)
+    camera:Camera
     controller:Controller = new Controller()
     /*
     挂载 dom 节点
@@ -28,6 +28,7 @@ export class Scene extends RenderList {
     初始化函数
      */
     init(){
+        this.camera = new Camera(this)
         this.controller.init(this)
 
     }

@@ -28,7 +28,7 @@
     "baseUrl": ".",
     "outDir": "./dist",
     // 输出目录
-    "sourceMap": false,
+    "sourceMap": true,
     // 是否生成sourceMap
     "target": "es2015",
     // 编译目标

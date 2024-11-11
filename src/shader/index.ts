@@ -8,10 +8,11 @@ export class ShaderSet extends Set<BasicShader>{
         this.vertexShader = new VertexShader(
             `
             attribute vec4 aVertexPosition;
-            uniform mat4 uModelViewMatrix;
+            uniform mat4 uModelMatrix;
             uniform mat4 uProjectionMatrix;
+            uniform mat4 uViewMatrix;
             void main() {
-                gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+                gl_Position = uModelMatrix * uProjectionMatrix * uViewMatrix * aVertexPosition;
             }
             `
         )
