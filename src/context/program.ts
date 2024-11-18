@@ -48,7 +48,7 @@ export class Program extends Tiny {
     create(gl:WebGLRenderingContext) {
         this.id = gl.createProgram() as WebGLProgram
     }
-    initAttribute(gl){
+    initAttribute(gl:WebGLRenderingContext){
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveAttrib(this.id, index);
@@ -61,7 +61,7 @@ export class Program extends Tiny {
             };
         }
     }
-    initUniform(gl){
+    initUniform(gl:WebGLRenderingContext){
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveUniform(this.id, index);
