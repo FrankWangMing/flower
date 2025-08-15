@@ -28,7 +28,7 @@
     "baseUrl": ".",
     "outDir": "./dist",
     // 输出目录
-    "sourceMap": true,
+    "inlineSources": true,
     // 是否生成sourceMap
     "target": "es2015",
     // 编译目标
@@ -62,17 +62,11 @@
     // 生成定义sourceMap
     "declarationDir": "./dist",
     // 导入库类型定义
-    "types": [
-      "gl-matrix",
-      "lodash"
-    ],
+    "types": ["gl-matrix", "lodash"]
   },
   "include": [
     "src/*"
     // 导入目录
   ],
-  "exclude": ["node_modules","dist"]
+  "exclude": ["node_modules", "dist"]
 }
-
-
-

@@ -28,4 +28,5 @@ export class CameraChain extends AbstractHandler {
         Rotate.update(pos)
         return  null
     }
+    m
 }

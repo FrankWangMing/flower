@@ -5,7 +5,7 @@ hero:
   description: A static site based on dumi
   actions:
     - text: Hello
-      link: /
+      link: /guide
     - text: World
       link: /
 features:
