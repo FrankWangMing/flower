@@ -12,9 +12,9 @@
     "build": "npm run build:app && npm run build:types ",
     "dev": "vite build --watch",
     "start": "npm run dev",
-    "doc:dev": "dumi dev",
-    "build:doc": "dumi build",
-    "preview": "dumi preview"
+    "doc:dev": "vite --config docs/vite.config.ts",
+    "build:doc": "vite build --config docs/vite.config.ts",
+    "preview": "vite preview --config docs/vite.config.ts"
   },
   "type": "module",
   "files": [
