@@ -1,4 +1,4 @@
- 
+
 # Flower  WebGL 3D 渲染引擎
 
 这是一个基于 WebGL 和 React 的 3D 渲染引擎，支持渲染和显示 3D 模型，适用于工业仿真、数据可视化等领域。该项目提供了一个灵活的 API，允许用户创建、管理和渲染 3D 场景。
@@ -115,42 +115,42 @@ export default App;
 
 #### `Scene`
 
-- `mount(container: HTMLElement)`  
+- `mount(container: HTMLElement)`
   将 WebGL 渲染场景挂载到指定的 DOM 元素。
 
-- `add(object: Cell)`  
+- `add(object: Cell)`
   将一个 3D 对象（`Cell`）添加到场景中。
 
-- `build()`  
+- `build()`
   构建并初始化场景中的所有资源。
 
-- `render()`  
+- `render()`
   渲染场景中的所有对象。
 
-- `destroy()`  
+- `destroy()`
   销毁场景，释放所有 WebGL 资源。
 
 #### `Cell`
 
-- `new Cell(options)`  
+- `new Cell(options)`
   创建一个新的 3D 对象，包含几何体和材质。
 
-  - `geometry: Geometry`  
+  - `geometry: Geometry`
   - `material: Material`
 
 #### `Buffer`
 
-- `new Buffer(data)`  
+- `new Buffer(data)`
   创建一个缓冲区对象，存储来自 JSON 数据的原始几何数据。
 
 #### `Geometry`
 
-- `new Geometry(buffer: Buffer)`  
+- `new Geometry(buffer: Buffer)`
   创建一个几何对象，封装缓冲区数据。
 
 #### `Material`
 
-- `new Material()`  
+- `new Material()`
   创建一个基础材质对象，用于 3D 对象的着色。
 
 ## 配置

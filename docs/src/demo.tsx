@@ -10,7 +10,7 @@ type CubeJson = {
 };
 
 async function loadCubeJson(): Promise<CubeJson> {
-  // `cube.json` 在项目根目录的 `public/` 下，dumi/umi 会以站点根路径提供静态资源
+  // `cube.json` 在项目根目录的 `public/` 下（docs 的 Vite 配置复用了该目录）
   const res = await fetch('/cube.json');
   if (!res.ok) throw new Error(`加载 cube.json 失败: ${res.status} ${res.statusText}`);
   return (await res.json()) as CubeJson;
