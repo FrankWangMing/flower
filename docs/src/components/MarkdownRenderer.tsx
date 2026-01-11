@@ -3,10 +3,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
+import { getDemoComponent } from './demoComponents';
 // highlight.js 样式会在运行时动态加载，避免 SSR 问题
 // import 'highlight.js/styles/github-dark.css';
 
-// 动态导入组件
+// 组件缓存
 const componentCache = new Map<string, React.ComponentType>();
 
 async function loadComponent(src: string): Promise<React.ComponentType> {
@@ -14,20 +15,20 @@ async function loadComponent(src: string): Promise<React.ComponentType> {
     return componentCache.get(src)!;
   }
 
-  // 处理路径：如果路径是 ./src/xxx，需要转换为相对于 docs/src/ 的路径
-  // 因为组件在 docs/src/components/ 下，所以需要向上两级
-  let normalizedSrc = src;
+  // 首先尝试从静态映射中获取（生产环境安全）
+  const staticComp = getDemoComponent(src);
+  if (staticComp) {
+    componentCache.set(src, staticComp);
+    return staticComp;
+  }
 
-  // 如果路径是 ./src/xxx，转换为 ../xxx（相对于 components 目录）
+  // Fallback: 动态导入（开发环境）
+  let normalizedSrc = src;
   if (normalizedSrc.startsWith('./src/')) {
     normalizedSrc = normalizedSrc.replace('./src/', '../');
-  }
-  // 如果路径是 ./xxx（不是 ./src/），也转换为 ../xxx
-  else if (normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('./src/')) {
+  } else if (normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('./src/')) {
     normalizedSrc = normalizedSrc.replace('./', '../');
-  }
-  // 如果路径不是以 ./ 或 ../ 开头，添加 ../
-  else if (!normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('../')) {
+  } else if (!normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('../')) {
     normalizedSrc = `../${normalizedSrc}`;
   }
 

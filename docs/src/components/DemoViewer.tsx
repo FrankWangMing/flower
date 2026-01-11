@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DemoConfig } from '../config/demos';
+import { getDemoComponent } from './demoComponents';
 
 interface DemoViewerProps {
   demo: DemoConfig | null;
@@ -20,28 +21,35 @@ export default function DemoViewer({ demo }: DemoViewerProps) {
     setError(null);
     setComponent(null);
 
-    // 处理路径：如果路径是 ./src/xxx，需要转换为相对于 components 目录的路径
-    let normalizedSrc = demo.src;
-    if (normalizedSrc.startsWith('./src/')) {
-      normalizedSrc = normalizedSrc.replace('./src/', '../');
-    } else if (normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('./src/')) {
-      normalizedSrc = normalizedSrc.replace('./', '../');
-    } else if (!normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('../')) {
-      normalizedSrc = `../${normalizedSrc}`;
-    }
+    // 从静态映射中获取组件（生产环境安全）
+    const Comp = getDemoComponent(demo.src);
 
-    // 动态导入组件
-    import(/* @vite-ignore */ normalizedSrc)
-      .then((module) => {
-        const Comp = module.default || module;
-        setComponent(() => Comp);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(`Failed to load demo: ${demo.src}`, err);
-        setError(`无法加载组件: ${demo.title}`);
-        setLoading(false);
-      });
+    if (Comp) {
+      setComponent(() => Comp);
+      setLoading(false);
+    } else {
+      // Fallback: 尝试动态导入（开发环境）
+      let normalizedSrc = demo.src;
+      if (normalizedSrc.startsWith('./src/')) {
+        normalizedSrc = normalizedSrc.replace('./src/', '../');
+      } else if (normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('./src/')) {
+        normalizedSrc = normalizedSrc.replace('./', '../');
+      } else if (!normalizedSrc.startsWith('./') && !normalizedSrc.startsWith('../')) {
+        normalizedSrc = `../${normalizedSrc}`;
+      }
+
+      import(/* @vite-ignore */ normalizedSrc)
+        .then((module) => {
+          const DynamicComp = module.default || module;
+          setComponent(() => DynamicComp);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error(`Failed to load demo: ${demo.src}`, err);
+          setError(`无法加载组件: ${demo.title}`);
+          setLoading(false);
+        });
+    }
   }, [demo]);
 
   if (!demo) {
