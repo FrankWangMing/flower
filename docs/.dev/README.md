@@ -1,4 +1,8 @@
-# Flower 文档系统
+# 文档开发说明
+
+本文档说明如何开发和维护 Flower 文档系统。
+
+## 文档系统
 
 这是一个基于 Markdown + React 的文档系统，支持在 Markdown 中嵌入 React 组件 demo。
 
@@ -51,7 +55,8 @@ pnpm doc:dev
 ```
 docs/
 ├── index.md              # 首页
-├── guide.md              # 指南页面
+├── getting-started.md    # 快速开始
+├── api/                  # API 文档
 ├── src/
 │   ├── App.tsx           # 主应用组件（路由配置）
 │   ├── main.tsx          # 入口文件

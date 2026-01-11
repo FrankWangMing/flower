@@ -146,7 +146,6 @@ import { Scene, Cell, Buffer, Geometry, Material } from 'flower';
 
 - [快速开始](/getting-started) - 学习如何使用这些 API
 - [示例演示](/demos) - 查看实际使用案例
-- [基础渲染指南](/guides/basic-rendering) - 详细的使用教程
 
 ---
 
@@ -154,4 +153,4 @@ import { Scene, Cell, Buffer, Geometry, Material } from 'flower';
 
 当前文档版本：**v0.0.1**
 
-API 可能会在后续版本中发生变化，请关注 [更新日志](#) 了解最新变更。
+API 可能会在后续版本中发生变化。

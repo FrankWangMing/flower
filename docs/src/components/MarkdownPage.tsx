@@ -25,7 +25,7 @@ export default function MarkdownPage({ path }: MarkdownPageProps) {
         } else {
           // 如果 default 不是字符串，尝试从 URL 获取
           const urlPath = path.startsWith('./') ? path.slice(2) : path;
-          fetch(`/${urlPath}`)
+          fetch(urlPath.startsWith('/') ? urlPath : `/${urlPath}`)
             .then((res) => {
               if (!res.ok) throw new Error(`Failed to load: ${res.status}`);
               return res.text();
@@ -41,9 +41,10 @@ export default function MarkdownPage({ path }: MarkdownPageProps) {
         }
       })
       .catch((err) => {
-        // 如果 import 失败，尝试直接 fetch
+        // 如果 import 失败，尝试直接 fetch（生产环境 fallback）
         const urlPath = path.startsWith('./') ? path.slice(2) : path;
-        fetch(`/${urlPath}`)
+        const fetchPath = urlPath.startsWith('/') ? urlPath : `/${urlPath}`;
+        fetch(fetchPath)
           .then((res) => {
             if (!res.ok) throw new Error(`Failed to load: ${res.status} ${res.statusText}`);
             return res.text();

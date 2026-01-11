@@ -37,5 +37,13 @@ pnpm install
 ## 快速链接
 
 - 🚀 [快速开始](/getting-started) - 5 分钟创建第一个场景
-- 📚 [API 文档](/api/scene) - 完整的 API 参考
+- 📚 [API 文档](/api) - 完整的 API 参考
 - 🎮 [示例演示](/demos) - 交互式示例
+
+## 文档结构
+
+```
+首页 → 快速开始 → API 文档 → 示例演示
+```
+
+所有文档都支持在 Markdown 中嵌入可交互的 React 组件，让你边学边看效果。

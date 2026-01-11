@@ -39,10 +39,43 @@ function markdownPlugin() {
   };
 }
 
+// 构建时复制 Markdown 文件到输出目录
+function copyMarkdownPlugin() {
+  return {
+    name: 'copy-markdown',
+    writeBundle() {
+      const distDir = path.resolve(__dirname, 'dist');
+      const mdFiles = [
+        'index.md',
+        'getting-started.md',
+        'api/index.md',
+        'api/scene.md',
+        'api/cell.md',
+        'api/geometry.md',
+        'api/material.md',
+      ];
+
+      mdFiles.forEach((file) => {
+        const srcPath = path.resolve(__dirname, file);
+        if (fs.existsSync(srcPath)) {
+          const destPath = path.resolve(distDir, file);
+          const destDir = path.dirname(destPath);
+          // 确保目标目录存在
+          if (!fs.existsSync(destDir)) {
+            fs.mkdirSync(destDir, { recursive: true });
+          }
+          // 复制文件
+          fs.copyFileSync(srcPath, destPath);
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig({
   // 让 Vite 以 `docs/` 为站点根目录
   root: __dirname,
-  plugins: [react(), markdownPlugin()],
+  plugins: [react(), markdownPlugin(), copyMarkdownPlugin()],
   // 复用项目根目录 public（提供 /cube.json 等静态资源）
   publicDir: path.resolve(__dirname, '..', 'public'),
   resolve: {
@@ -50,6 +83,11 @@ export default defineConfig({
       // 在 docs 里直接引用源码（不依赖已构建的 lib）
       '@flower': path.resolve(__dirname, '..', 'src'),
     },
+  },
+  build: {
+    outDir: 'dist',
+    // 确保静态资源被正确处理
+    assetsDir: 'assets',
   },
 });
 
