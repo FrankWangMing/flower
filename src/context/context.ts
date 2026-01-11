@@ -3,7 +3,7 @@ import {Global} from "../utils/global.ts";
 
 export class Context {
     canvas:HTMLCanvasElement
-    gl!:WebGLRenderingContext
+    gl!:WebGL2RenderingContext
     constructor(mount:HTMLDivElement) {
         const dpr = window.devicePixelRatio||1
         const canvas =createCanvasElement(mount)
@@ -13,9 +13,8 @@ export class Context {
         this.canvas = canvas;
         this.gl = canvas.getContext('webgl2', {
             stencil: false,
-        }) as WebGLRenderingContext;
+        }) as WebGL2RenderingContext;
         Global.gl = this.gl
-        console.log(Global.gl)
         const extensions = new Set<string>();
         extensions.add('OES_element_index_uint');
         extensions.add('OES_vertex_array_object');

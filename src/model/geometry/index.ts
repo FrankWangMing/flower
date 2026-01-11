@@ -28,11 +28,13 @@ export class Geometry{
             this.add(new VertexBufferObject("aVertexPosition",buffer.vertices))
         }
         if(buffer.indices){
-            this.add(new IndexBufferObject(buffer.indices))
+            const ibo = new IndexBufferObject(buffer.indices)
+            this.add(ibo)
+            // 根据索引数量创建 DrawElements
+            this.drawers.add(
+                new DrawElements(ibo.data.length)
+            )
         }
-        this.drawers.add(
-            new DrawElements()
-        )
     }
     add(vbo:VertexBufferObject|IndexBufferObject){
         this.vbos.add(vbo)

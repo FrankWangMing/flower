@@ -12,9 +12,9 @@
     "build": "npm run build:app && npm run build:types ",
     "dev": "vite build --watch",
     "start": "npm run dev",
-    "doc:dev": "vite --config vite.config.ts --mode development",
-    "build:doc": "vite build --config vite.config.ts",
-    "preview": "vite preview --config vite.config.ts"
+    "doc:dev": "vite --config docs/vite.config.ts",
+    "build:doc": "vite build --config docs/vite.config.ts",
+    "preview": "vite preview --config docs/vite.config.ts"
   },
   "type": "module",
   "files": [
@@ -48,6 +48,11 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.14",
+    "highlight.js": "^11.9.0",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
+    "rehype-highlight": "^7.0.0",
+    "rehype-raw": "^7.0.0",
     "typescript": "^5.6.3",
     "vite": "^5.4.11"
   },

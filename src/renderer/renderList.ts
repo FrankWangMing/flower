@@ -45,11 +45,6 @@ export class RenderList extends Array<Cell>{
                 }
             )
         })
-        this.camera.defaultUniform.forEach(i=>{
-            console.log(i)
-            queue.push(i)
-        })
-        console.log(queue)
         this.queue = queue
     }
 

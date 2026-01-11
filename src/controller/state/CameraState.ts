@@ -10,7 +10,6 @@ export class CameraState extends State {
     }
 
     start(): void {
-        console.log("JJJ")
         this.context.chain.setNext(this.context.cameraChain)
     }
 }

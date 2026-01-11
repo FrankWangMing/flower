@@ -30,15 +30,16 @@ export class DrawArray extends BasicDraw{
 }
 
 export class DrawElements extends BasicDraw {
-    constructor() {
+    indexCount: number
+    constructor(indexCount: number) {
         super();
+        this.indexCount = indexCount
     }
     tie(gl: WebGLRenderingContext) {
         this.draw(gl)
     }
     draw(gl: WebGLRenderingContext) {
-        const vertexCount = 36;
-        gl.drawElements(gl.TRIANGLES, vertexCount, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, this.indexCount, gl.UNSIGNED_SHORT, 0);
     }
 }
 

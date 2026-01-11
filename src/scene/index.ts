@@ -20,7 +20,6 @@ export class Scene extends RenderList {
     挂载 dom 节点
     * */
     mount(mount:HTMLDivElement){
-        console.log(mount)
         this.context = new Context(mount)
         this.init()
     }
@@ -45,7 +44,6 @@ export class Scene extends RenderList {
 
     /*执行渲染*/
     render(){
-        console.log("render")
         super.render(this.gl)
     }
 

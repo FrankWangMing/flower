@@ -53,9 +53,7 @@ export class Program extends Tiny {
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveAttrib(this.id, index);
             const name = activeAttribInfo.name;
-            console.log("name",name)
             const location = gl.getAttribLocation(this.id, name);
-            console.log("location",location)
             this.m_attributeLocations[name] = {
                 location: location,
             };
@@ -66,9 +64,7 @@ export class Program extends Tiny {
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveUniform(this.id, index);
             const name = activeAttribInfo.name;
-            console.log("name",name)
             const location = gl.getUniformLocation(this.id, name);
-            console.log("location",location)
             this.m_uniformLocations[name] = {
                 location: location,
                 type:activeAttribInfo.type,

@@ -6,21 +6,23 @@ export class ShaderSet extends Set<BasicShader>{
     constructor(){
         super()
         this.vertexShader = new VertexShader(
-            `
-            attribute vec4 aVertexPosition;
+            `#version 300 es
+            in vec4 aVertexPosition;
             uniform mat4 uModelMatrix;
-            uniform mat4 uProjectionMatrix;
             uniform mat4 uViewMatrix;
+            uniform mat4 uProjectionMatrix;
             void main() {
-                gl_Position = uModelMatrix * uProjectionMatrix * uViewMatrix * aVertexPosition;
+                gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * aVertexPosition;
             }
             `
         )
         this.fragmentShader = new FragmentShader(
-            `
-                void main() {
-                    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-                }
+            `#version 300 es
+            precision highp float;
+            out vec4 outColor;
+            void main() {
+                outColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }
             `
         )
         this.add(this.vertexShader)

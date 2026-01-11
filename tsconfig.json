@@ -28,8 +28,6 @@
     "baseUrl": ".",
     "outDir": "./dist",
     // 输出目录
-    "inlineSources": true,
-    // 是否生成sourceMap
     "target": "es2015",
     // 编译目标
     "module": "esnext",
@@ -55,7 +53,8 @@
     "noUnusedParameters": false,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": false,
-    "inlineSourceMap": true,
+    "sourceMap": true,
+    // 生成 sourceMap（用于调试）
     "declaration": true,
     // 生成定义文件
     "declarationMap": true,

@@ -11,7 +11,6 @@ export class CameraChain extends AbstractHandler {
     }
 
     mousedown(request: MouseEvent): MouseEvent | null {
-        console.log(request)
         const pos = [request.clientX, request.clientY]
         const viewMatrix = ViewMatrix.current
         viewMatrix.pos = pos
@@ -28,5 +27,4 @@ export class CameraChain extends AbstractHandler {
         Rotate.update(pos)
         return null
     }
-    m
 }

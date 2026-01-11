@@ -21,7 +21,6 @@ export class Controller {
         this.cameraChain = new CameraChain()
         this.switchState(RequestState.Camera)
         scene.context!.canvas.addEventListener("mousedown",(r)=>{
-              console.log(r)
             this.chain.mousedown(r)
             // scene.camera.update()
             scene.render()
@@ -31,7 +30,6 @@ export class Controller {
             }
         })
         scene.context!.canvas.addEventListener("mouseup",(r)=>{
-            console.log(r)
             this.chain.mouseup(r)
             // scene.camera.update()
             // scene.render()
