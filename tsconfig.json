@@ -1,26 +1,3 @@
-//{
-//  "compilerOptions": {
-//    "target": "ESNext",
-//    "module": "ESNext",
-//    "strict": false,
-//    "declaration": true,
-//    "outDir": "./dist",
-//    "esModuleInterop": true,
-//    "skipLibCheck": true,
-//    "moduleResolution": "node",
-//    "resolveJsonModule": true,
-//    "jsx": "react-jsx",
-//    "baseUrl": ".",
-//    "paths": {
-//      "@lib/*": ["lib/*"]
-//    }
-//  },
-//  "types": [
-//    "gl-matrix"
-//  ],
-//  "include": ["src"],
-//  "exclude": ["node_modules","dist"]
-//}
 {
   "compilerOptions": {
     "jsx": "react",
@@ -61,7 +38,7 @@
     // 生成定义sourceMap
     "declarationDir": "./dist",
     // 导入库类型定义
-    "types": ["gl-matrix", "lodash"]
+    "types": ["gl-matrix-esm", "lodash"]
   },
   "include": [
     "src/*"
