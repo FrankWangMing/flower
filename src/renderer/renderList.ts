@@ -20,30 +20,39 @@ export class RenderList extends Array<Cell> {
             DepthState.default()
         )
 
-        this.forEach(i => {
+        this.forEach(cell => {
             // 根据 Material 的渲染模式更新 Geometry 的绘制模式
-            if (i.material.renderMode) {
-                i.geometry.updateDrawMode(i.material.renderMode.mode)
+            if (cell.material.renderMode) {
+                cell.geometry.updateDrawMode(cell.material.renderMode.mode)
             }
 
             queue.push(
-                new Program(gl, i.material.shader)
+                new Program(gl, cell.material.shader)
             )
-            this.camera.defaultUniform.forEach(i => {
-                queue.push(i)
+            
+            // 添加相机的默认uniform（除了modelMatrix，使用cell自己的）
+            this.camera.defaultUniform.forEach(uniform => {
+                // 跳过全局的modelMatrix，使用cell自己的
+                if (uniform.name !== 'uModelMatrix') {
+                    queue.push(uniform)
+                }
             })
-            i.material.state.forEach(i => {
-                queue.push(i)
+            
+            // 添加cell自己的modelMatrix
+            queue.push(cell.modelMatrix)
+            
+            cell.material.state.forEach(state => {
+                queue.push(state)
             })
-            i.material.uniform.forEach(i => {
-                queue.push(i)
+            cell.material.uniform.forEach(uniform => {
+                queue.push(uniform)
             })
-            i.geometry.vbos.forEach(
+            cell.geometry.vbos.forEach(
                 vbo => {
                     queue.push(vbo)
                 }
             )
-            i.geometry.drawers.forEach(
+            cell.geometry.drawers.forEach(
                 drawer => {
                     queue.push(drawer)
                 }

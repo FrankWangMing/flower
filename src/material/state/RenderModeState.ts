@@ -17,7 +17,7 @@ export class RenderModeState extends Tiny {
         this.pointSize = config?.pointSize ?? 1.0;
     }
 
-    tie(gl: WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
         // 设置线宽（仅对 LINES 和 LINE_STRIP 有效，大多数实现只支持 1.0）
         if (this.mode === RenderMode.WIREFRAME || this.mode === RenderMode.LINES) {
             gl.lineWidth(this.lineWidth);
@@ -30,11 +30,14 @@ export class RenderModeState extends Tiny {
         }
 
         // 启用多边形偏移（线框模式下避免 z-fighting）
+        // 注意：使用 POLYGON_OFFSET_FILL 而不是 POLYGON_OFFSET_LINE
+        // POLYGON_OFFSET_LINE 需要 WEBGL_polygon_mode 扩展，不被广泛支持
+        const POLYGON_OFFSET_FILL = gl.POLYGON_OFFSET_FILL;
         if (this.mode === RenderMode.WIREFRAME) {
-            gl.enable(gl.POLYGON_OFFSET_LINE);
+            gl.enable(POLYGON_OFFSET_FILL);
             gl.polygonOffset(-1.0, -1.0);
         } else {
-            gl.disable(gl.POLYGON_OFFSET_LINE);
+            gl.disable(POLYGON_OFFSET_FILL);
         }
     }
 

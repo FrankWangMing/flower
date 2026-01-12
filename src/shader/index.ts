@@ -1,10 +1,27 @@
 import { BasicShader, FragmentShader, VertexShader } from "../context/FragmentShader";
+import { ShaderFeatureConfig } from "./ShaderFeature";
+import { ShaderBuilder } from "./ShaderBuilder";
 
 export class ShaderSet extends Set<BasicShader> {
     vertexShader: VertexShader
     fragmentShader: FragmentShader
-    constructor() {
+    private config: ShaderFeatureConfig
+
+    constructor(config?: ShaderFeatureConfig) {
         super()
+        this.config = config || {}
+        
+        // 如果提供了配置，使用 ShaderBuilder 构建
+        if (config && Object.keys(config).length > 0) {
+            const builder = new ShaderBuilder(config)
+            this.vertexShader = new VertexShader(builder.buildVertexShader())
+            this.fragmentShader = new FragmentShader(builder.buildFragmentShader())
+            this.add(this.vertexShader)
+            this.add(this.fragmentShader)
+            return
+        }
+        
+        // 否则使用默认 Shader（保持向后兼容）
         this.vertexShader = new VertexShader(
             `#version 300 es
             // 输入属性
@@ -140,7 +157,14 @@ export class ShaderSet extends Set<BasicShader> {
         this.add(this.fragmentShader)
     }
 
-
-
-
+    /**
+     * 获取当前配置
+     */
+    getConfig(): ShaderFeatureConfig {
+        return this.config
+    }
 }
+
+// 导出 Shader 功能相关类型
+export { ShaderFeature, type ShaderFeatureConfig } from "./ShaderFeature";
+export { ShaderBuilder } from "./ShaderBuilder";

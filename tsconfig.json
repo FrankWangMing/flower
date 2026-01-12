@@ -41,8 +41,10 @@
     "types": ["gl-matrix-esm", "lodash"]
   },
   "include": [
-    "src/*"
+    "src/*",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts"
     // 导入目录
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "lib", "docs"]
 }
