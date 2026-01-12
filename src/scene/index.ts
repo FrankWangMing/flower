@@ -1,53 +1,62 @@
-import {Context} from "../context/context";
-import {Model} from "../model";
+import { Context } from "../context/context";
+import { Model } from "../model";
 
-import {RenderList} from "../renderer/renderList";
-import {Background} from "./background";
-import {Cell} from "../model/cell";
-import {Controller} from "../controller";
-import {Camera} from "../camera";
+import { RenderList } from "../renderer/renderList";
+import { Background } from "./background";
+import { Cell } from "../model/cell";
+import { Controller } from "../controller";
+import { Camera } from "../camera";
 
 export class Scene extends RenderList {
     context: Context | undefined
     constructor() {
         super()
     }
-    background:Background = new Background()
-    model:Model = new Model()
-    camera:Camera
-    controller:Controller = new Controller()
+    background: Background = new Background()
+    model: Model = new Model()
+    camera: Camera
+    controller: Controller = new Controller()
     /*
     挂载 dom 节点
     * */
-    mount(mount:HTMLDivElement){
+    mount(mount: HTMLDivElement) {
         this.context = new Context(mount)
         this.init()
     }
     /*
     初始化函数
      */
-    init(){
+    init() {
         this.camera = new Camera(this)
         this.controller.init(this)
 
     }
-    get gl():WebGLRenderingContext{
-        return this.context?.gl as WebGLRenderingContext
+    get gl(): WebGL2RenderingContext {
+        return this.context?.gl as WebGL2RenderingContext
     }
 
     /*
     构建渲染队列
     */
-    build(){
+    build() {
         super.build(this.gl)
     }
 
     /*执行渲染*/
-    render(){
+    render() {
         super.render(this.gl)
     }
 
-    add(cell:Cell){
+    add(cell: Cell) {
         this.push(cell)
+    }
+
+    /**
+     * 获取场景中所有可交互的对象
+     * @returns Cell 数组
+     */
+    getInteractableObjects(): Cell[] {
+        // Scene 继承自 RenderList，而 RenderList 继承自 Array<Cell>
+        return Array.from(this);
     }
 }

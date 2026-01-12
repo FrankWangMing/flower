@@ -1,42 +1,42 @@
 import { FragmentShader, VertexShader } from "./FragmentShader"
-import {Tiny} from "./co/tiny";
-import {ShaderSet} from "../shader";
+import { Tiny } from "./co/tiny";
+import { ShaderSet } from "../shader";
 
 
 export interface IAttributeInfo {
     location: number;
-  }
+}
 
-  export interface IUniformInfo {
+export interface IUniformInfo {
     location: WebGLUniformLocation;
     type: number;
-  }
+}
 
 interface IAttributeLocations {
     [index: string]: IAttributeInfo;
-  }
+}
 
-  interface IUniformLocations {
+interface IUniformLocations {
     [index: string]: IUniformInfo;
-  }
+}
 
 export class Program extends Tiny {
-    static current:Program
-    VertexShader:VertexShader
-    FragmentShader:FragmentShader
-    id!:WebGLProgram
-    gl:WebGLRenderingContext
+    static current: Program
+    VertexShader: VertexShader
+    FragmentShader: FragmentShader
+    id!: WebGLProgram
+    gl: WebGL2RenderingContext
     m_attributeLocations = {} as IAttributeLocations;
     m_uniformLocations = {} as IUniformLocations;
-    constructor(gl:WebGLRenderingContext,shader:ShaderSet) {
+    constructor(gl: WebGL2RenderingContext, shader: ShaderSet) {
         super()
         this.gl = gl
         for (let i of shader) {
             i.tie(gl)
-            if(i instanceof VertexShader){
+            if (i instanceof VertexShader) {
                 this.VertexShader = i
             }
-            if(i instanceof FragmentShader){
+            if (i instanceof FragmentShader) {
                 this.FragmentShader = i
             }
         }
@@ -45,10 +45,10 @@ export class Program extends Tiny {
 
     }
 
-    create(gl:WebGLRenderingContext) {
+    create(gl: WebGL2RenderingContext) {
         this.id = gl.createProgram() as WebGLProgram
     }
-    initAttribute(gl:WebGLRenderingContext){
+    initAttribute(gl: WebGL2RenderingContext) {
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_ATTRIBUTES);
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveAttrib(this.id, index);
@@ -59,7 +59,7 @@ export class Program extends Tiny {
             };
         }
     }
-    initUniform(gl:WebGLRenderingContext){
+    initUniform(gl: WebGL2RenderingContext) {
         const length = gl.getProgramParameter(this.id, gl.ACTIVE_UNIFORMS);
         for (let index = 0; index < length; index++) {
             const activeAttribInfo = gl.getActiveUniform(this.id, index);
@@ -67,11 +67,11 @@ export class Program extends Tiny {
             const location = gl.getUniformLocation(this.id, name);
             this.m_uniformLocations[name] = {
                 location: location,
-                type:activeAttribInfo.type,
+                type: activeAttribInfo.type,
             };
         }
     }
-    tie(gl:WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
         this.create(gl)
         this.attach()
         this.link()
@@ -87,17 +87,17 @@ export class Program extends Tiny {
 
     }
 
-    attach(){
-        this.gl.attachShader(this.id,this.VertexShader.shader)
-        this.gl.attachShader(this.id,this.FragmentShader.shader)
+    attach() {
+        this.gl.attachShader(this.id, this.VertexShader.shader)
+        this.gl.attachShader(this.id, this.FragmentShader.shader)
     }
 
-    link(){
+    link() {
         this.gl.linkProgram(this.id);
 
     }
 
-    use(){
+    use() {
         this.gl.useProgram(this.id);
         Program.current = this;
     }

@@ -40,7 +40,7 @@ WebGL 上下文，在 `mount()` 后可用。
 
 交互控制器，用于鼠标/触摸交互。
 
-### `gl: WebGLRenderingContext`
+### `gl: WebGL2RenderingContext`
 
 WebGL 渲染上下文，只读属性。
 

@@ -1,18 +1,18 @@
-import {Tiny} from "./co/tiny";
+import { Tiny } from "./co/tiny";
 
-export class BasicDraw extends Tiny{
+export class BasicDraw extends Tiny {
     constructor() {
         super()
     }
-    tie(gl: WebGLRenderingContext): void {
+    tie(gl: WebGL2RenderingContext): void {
         this.draw(gl)
     }
-    draw(gl:WebGLRenderingContext){
+    draw(gl: WebGL2RenderingContext) {
     }
 }
 
 
-export class DrawArray extends BasicDraw{
+export class DrawArray extends BasicDraw {
     constructor(
         mode: GLenum,
         count: number,
@@ -21,29 +21,31 @@ export class DrawArray extends BasicDraw{
     ) {
         super();
     }
-    tie(gl: WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
         this.draw(gl)
     }
-    draw(gl: WebGLRenderingContext) {
-        gl.drawArrays(gl.TRIANGLES, 0,3)
+    draw(gl: WebGL2RenderingContext) {
+        gl.drawArrays(gl.TRIANGLES, 0, 3)
     }
 }
 
 export class DrawElements extends BasicDraw {
     indexCount: number
-    constructor(indexCount: number) {
+    mode: GLenum
+    constructor(indexCount: number, mode: GLenum = WebGL2RenderingContext.prototype.TRIANGLES) {
         super();
         this.indexCount = indexCount
+        this.mode = mode
     }
-    tie(gl: WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
         this.draw(gl)
     }
-    draw(gl: WebGLRenderingContext) {
-        gl.drawElements(gl.TRIANGLES, this.indexCount, gl.UNSIGNED_SHORT, 0);
+    draw(gl: WebGL2RenderingContext) {
+        gl.drawElements(this.mode, this.indexCount, gl.UNSIGNED_SHORT, 0);
     }
 }
 
 
-export class DrawerSet extends Set<BasicDraw>{
+export class DrawerSet extends Set<BasicDraw> {
 
 }

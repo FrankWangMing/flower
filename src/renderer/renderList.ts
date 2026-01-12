@@ -1,46 +1,50 @@
-import {Tiny} from "../context/co/tiny";
-import {Cell} from "../model/cell";
-import {Program} from "../context/program";
-import {DepthState} from "../material/state";
+import { Tiny } from "../context/co/tiny";
+import { Cell } from "../model/cell";
+import { Program } from "../context/program";
+import { DepthState } from "../material/state";
 
-import {Camera} from "../camera";
 
-export class RenderList extends Array<Cell>{
+export class RenderList extends Array<Cell> {
     constructor() {
         super();
     }
 
 
-    build(gl:WebGLRenderingContext){
+    build(gl: WebGL2RenderingContext) {
         this.createQueue(gl)
     }
 
-    createQueue(gl:WebGLRenderingContext){
-        const queue:Tiny[] = []
+    createQueue(gl: WebGL2RenderingContext) {
+        const queue: Tiny[] = []
         queue.push(
             DepthState.default()
         )
 
-        this.forEach(i=>{
+        this.forEach(i => {
+            // 根据 Material 的渲染模式更新 Geometry 的绘制模式
+            if (i.material.renderMode) {
+                i.geometry.updateDrawMode(i.material.renderMode.mode)
+            }
+
             queue.push(
-                new Program(gl,i.material.shader)
+                new Program(gl, i.material.shader)
             )
-            this.camera.defaultUniform.forEach(i=>{
+            this.camera.defaultUniform.forEach(i => {
                 queue.push(i)
             })
-            i.material.state.forEach(i=>{
+            i.material.state.forEach(i => {
                 queue.push(i)
             })
-            i.material.uniform.forEach(i=>{
+            i.material.uniform.forEach(i => {
                 queue.push(i)
             })
             i.geometry.vbos.forEach(
-                vbo=>{
+                vbo => {
                     queue.push(vbo)
                 }
             )
             i.geometry.drawers.forEach(
-                drawer=>{
+                drawer => {
                     queue.push(drawer)
                 }
             )
@@ -48,13 +52,13 @@ export class RenderList extends Array<Cell>{
         this.queue = queue
     }
 
-    destroyQueue(gl:WebGLRenderingContext){
+    destroyQueue(gl: WebGL2RenderingContext) {
 
     }
 
-    queue:Tiny[]=[]
+    queue: Tiny[] = []
 
-    render(gl:WebGLRenderingContext){
+    render(gl: WebGL2RenderingContext) {
         this.destroyQueue(gl)
         this.createQueue(gl)
 
@@ -63,7 +67,7 @@ export class RenderList extends Array<Cell>{
         gl.enable(gl.DEPTH_TEST);
         gl.depthFunc(gl.LEQUAL);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        this.queue.forEach(i=>{
+        this.queue.forEach(i => {
             i.tie(gl)
         })
         const error = gl.getError();

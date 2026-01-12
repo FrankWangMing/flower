@@ -1,4 +1,4 @@
-export class Global{
-    static gl:WebGLRenderingContext
+export class Global {
+    static gl: WebGL2RenderingContext
 
 }

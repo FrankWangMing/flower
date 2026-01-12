@@ -1,29 +1,11 @@
-import {Tiny} from "../../context/co/tiny";
-import {mat4, Mat4Like} from "gl-matrix-esm";
-import {IUniformInfo, Program} from "../../context/program.ts";
+// 导出基类
+export { Uniform, UniformSet } from "./Uniform";
 
-export class Uniform  extends Tiny {
-    constructor() {
-        super()
-    }
-    name:string
-    public matrix: Mat4Like = mat4.create()
-    protected location
-    protected findUniformInfo(): IUniformInfo {
-        const program = Program.current;
-        const locations = program.m_uniformLocations;
-        return locations[this.name];
-    }
-    update(){
-        const gl = Program.current.gl
-        gl.uniformMatrix4fv(this.location, false, this.matrix);
-    }
-    updateMatrix(matrix:Mat4Like){
-        this.matrix = matrix
-    }
-}
-export class  UniformSet extends Set<Uniform> {
-    constructor() {
-        super();
-    }
-}
+// 导出光照和材质相关的 Uniform
+export { NormalMatrix } from "./NormalMatrix";
+export { MaterialColor } from "./MaterialColor";
+export { MaterialShininess } from "./MaterialShininess";
+export { LightDirection } from "./LightDirection";
+export { LightColor } from "./LightColor";
+export { AmbientColor } from "./AmbientColor";
+export { PointSize } from "./PointSize";

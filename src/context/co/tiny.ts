@@ -1,15 +1,15 @@
 export abstract class Tiny {
 
     //创建
-    create(gl:WebGLRenderingContext) {
+    create(gl: WebGL2RenderingContext) {
 
     }
-     //销毁
-    destroy(gl:WebGLRenderingContext) {
+    //销毁
+    destroy(gl: WebGL2RenderingContext) {
 
     }
     //绑定
-    tie(gl:WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
 
     }
     //解除绑定

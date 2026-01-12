@@ -1,14 +1,14 @@
 
-import {Tiny} from "../../context/co/tiny";
-import {Program} from "../../context/program.ts";
+import { Tiny } from "../../context/co/tiny";
+import { Program } from "../../context/program.ts";
 
-export class Attribute  extends Tiny {
-    name:string
+export class Attribute extends Tiny {
+    name: string
     constructor() {
         super()
     }
 
-    tie(gl: WebGLRenderingContext) {
+    tie(gl: WebGL2RenderingContext) {
         const positionAttributeLocation = gl.getAttribLocation(
             Program.current,
             "aVertexPosition"
@@ -17,7 +17,7 @@ export class Attribute  extends Tiny {
     }
 }
 
-export class  AttributeSet extends Set<Attribute> {
+export class AttributeSet extends Set<Attribute> {
     constructor() {
         super();
     }

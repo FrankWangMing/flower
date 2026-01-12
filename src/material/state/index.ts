@@ -1,27 +1,28 @@
-import {Tiny} from "../../context/co/tiny";
+import { Tiny } from "../../context/co/tiny";
 
-export class State extends Tiny{
+export class State extends Tiny {
     constructor() {
         super()
     }
 }
 
-export class DepthState extends State{
+export class DepthState extends State {
     constructor() {
         super();
     }
-    static default(){
+    static default() {
         return new DepthState()
     }
 }
 
-export class BlendState extends State{
+export class BlendState extends State {
     constructor() {
         super();
     }
 }
 
+export { RenderModeState } from "./RenderModeState";
 
-export class StateSet extends Set<State>{
+export class StateSet extends Set<State> {
 
 }

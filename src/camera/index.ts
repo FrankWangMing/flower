@@ -1,17 +1,17 @@
-import {DefaultUniform} from "./DefaultUniform.ts";
-import {mat4} from "gl-matrix-esm";
-import {Scene} from "../scene";
-import {RenderList} from "../renderer/renderList.ts";
+import { DefaultUniform } from "./DefaultUniform";
+import { mat4 } from "gl-matrix-esm";
+import { Scene } from "../scene";
+import { RenderList } from "../renderer/renderList";
 
 export class Camera {
-    defaultUniform:DefaultUniform
-    scene:Scene
-    constructor(scene:Scene){
+    defaultUniform: DefaultUniform
+    scene: Scene
+    constructor(scene: Scene) {
         this.scene = scene
-        this.defaultUniform =  new DefaultUniform()
+        this.defaultUniform = new DefaultUniform()
     }
 
-    update(){
+    update() {
         this.scene.render()
         // let then = 0;
         // let scene = this.scene

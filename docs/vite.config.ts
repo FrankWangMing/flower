@@ -72,10 +72,70 @@ function copyMarkdownPlugin() {
   };
 }
 
+// 复制 models 文件夹到输出目录
+function copyModelsPlugin() {
+  return {
+    name: 'copy-models',
+    configureServer(server) {
+      // 开发服务器：将 /models 请求映射到 docs/models 目录
+      server.middlewares.use('/models', (req, res, next) => {
+        const filePath = path.resolve(__dirname, 'models', req.url || '');
+        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+          res.setHeader('Content-Type', getContentType(filePath));
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          next();
+        }
+      });
+    },
+    writeBundle() {
+      // 构建时：复制 models 文件夹到 dist
+      const modelsDir = path.resolve(__dirname, 'models');
+      const distModelsDir = path.resolve(__dirname, 'dist', 'models');
+
+      if (fs.existsSync(modelsDir)) {
+        copyDir(modelsDir, distModelsDir);
+      }
+    },
+  };
+}
+
+// 获取文件 MIME 类型
+function getContentType(filePath: string): string {
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeTypes: Record<string, string> = {
+    '.glb': 'model/gltf-binary',
+    '.gltf': 'model/gltf+json',
+    '.json': 'application/json',
+    '.obj': 'model/obj',
+    '.fbx': 'application/octet-stream',
+  };
+  return mimeTypes[ext] || 'application/octet-stream';
+}
+
+// 递归复制目录
+function copyDir(src: string, dest: string) {
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
 export default defineConfig({
   // 让 Vite 以 `docs/` 为站点根目录
   root: __dirname,
-  plugins: [react(), markdownPlugin(), copyMarkdownPlugin()],
+  plugins: [react(), markdownPlugin(), copyMarkdownPlugin(), copyModelsPlugin()],
   // 复用项目根目录 public（提供 /cube.json 等静态资源）
   publicDir: path.resolve(__dirname, '..', 'public'),
   resolve: {

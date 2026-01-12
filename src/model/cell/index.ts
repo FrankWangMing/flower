@@ -1,12 +1,12 @@
-import {Material} from "../../material";
-import {Geometry} from "../geometry";
-import {Event} from "../basic.ts";
+import { Material } from "../../material";
+import { Geometry } from "../geometry";
+import { Event } from "../basic";
 
-export class Cell extends Event{
-    material:Material
-    geometry:Geometry
+export class Cell extends Event {
+    material: Material
+    geometry: Geometry
     constructor(
-        params: { geometry: Geometry ; material: Material; }
+        params: { geometry: Geometry; material: Material; }
     ) {
         super()
         this.geometry = params.geometry

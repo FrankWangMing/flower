@@ -19,7 +19,7 @@ pnpm install
 
 ### 使用示例
 
-<Demo src="./src/demo.tsx" title="基础渲染示例" />
+<Demo src="./demos/demo.tsx" title="基础渲染示例" />
 
 ## 功能示例
 
